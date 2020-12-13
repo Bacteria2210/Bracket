@@ -1,0 +1,20 @@
+Phân tích đề bài:
+- Giả sử độ dài xâu con đang là l, bao gồm a dấu ngoặc mở và b dấu ngoặc đóng (a+b=l), ta sẽ luôn phải đảm bảo rằng số ngoặc mở nhiều hơn số ngoặc đóng, hay a-b>=0
+- Do độ sâu của các dấu ngoặc phải đến chính xác là k, ta bắt buộc phải có ít nhất 1 thời điểm nào đó mà a-b=k (Lúc này số ngoặc mở phía trước đang là a-b nên cần a-b dấu ngoặc đóng còn lại => sẽ có một cặp ngoặc độ sâu a-b). Hơn nữa, nếu tồn tại a-b>k thì lúc này độ sâu ngoặc sẽ > k. Nên độ sâu tối đa chỉ có thể là k.
+Ta sẽ vẽ một bảng đồ thị (xem tại https://github.com/Bacteria2210/Bracket/blob/main/Untitled.png), với trục hoành là độ dài xâu con của xâu n phần tử. Trục tung là số dấu ngoặc mở đang thừa. Khi đó: 
++ Mỗi lần tăng dáu ngoặc mở, thì hoành độ tăng thêm 1 đơn vị, tung độ cũng tăng lên 1.
++ Mỗi lần giảm dấu ngoặc mở, thì hoành độ tăng 1 đơn vị, tung độ giảm 1 đơn vị.
+Gọi dp[i][j] là độ dài xâu con j và đang thừa i dấu mở ngoặc.
+=> i luôn phải bé hơn hoặc bằng k
+   i luôn phải lớn hơn hoặc bằng 0
+ta sẽ tìm số cách đi để đến được ô (0,n) 
+Nhận thấy được, số cách đi đến ô dp[i][j] chính bằng số cách đi của ô dp[i-1][j-1] cộng với ô dp[i+1][j-1]
+Ví dụ, từ ô (1,3) chính là khi đi đến ô (0,2) đi thêm 1 bước, và đi đến ô (2,2) và đi thêm 1 bước. Do đó số cách đi đến ô (1,3) = cách đi đến ô (2,2) + cách đi đến ô (0,2)
+Sau 1 hồi loằng ngoằng tính toán, ta sẽ ra được kết quả cuối cùng ở ô (0,n). Nhưng liệu kết quả này đã đúng chưa? Thử thì biết ngay, nó sẽ ra số cách đi đến ô (0,n) thỏa mãn độ sâu không quá k.
+Để hiểu hơn nhìn hình minh họa ở 
+https://github.com/Bacteria2210/Bracket/blob/main/open.png
+Cách làm này thiếu mất 1 điều kiện là phải có 1 điểm có tung độ là k
+Lúc này ta sẽ nghĩ đến lí thuyết tập hợp:
+- Giả sử tập A bao gồm các cách chọn có độ sâu TỐI ĐA là k và có độ dài xâu là n. Khi đó tập A có x phần tử
+- Giả sử tập A1 bao gồm các cách chọn có độ sâu TỐI ĐA là k-1 và có độ dài xâu là n. Khi đó tập A1 có y phần tử, A1 là tập con của A
+- Giả sử tập A2 bao gồm các cách chọn có độ sâu chính xác là k, hay có điểm có tung độ là k, khi đó, số phần tử của A2 chính xác bằng số phần từ A-A1.
