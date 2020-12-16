@@ -12,7 +12,7 @@
 #include <math.h>
 #include <time.h>
 #define ll long long
-#define taskname ""
+#define taskname "BRACKETS"
 #define faster ios_base::sync_with_stdio(false);\
 cin.tie(nullptr);
 using namespace std;
@@ -26,16 +26,15 @@ ll solve(ll n,ll k){
         for (ll j=(i%2==0)?0:1;j<=k;j+=2){
             ll a=(j==0)?0:dp[j-1][i-1];
             ll b=(j==k)?0:dp[j+1][i-1];
-            dp[j][i]=a+b;
+            dp[j][i]=(a+b)%123456789;
         }
     }
     dp[0][0]=0;
-    return dp[0][n];
+    return dp[0][n]%123456789;
 }
 int main(){
-    //freopen(taskname".INP","r",stdin);
-    //freopen(taskname".OUT","w",stdout);
+    freopen(taskname".INP","r",stdin);
+    freopen(taskname".OUT","w",stdout);
     cin>>n>>k;
-    cout<<solve(n,k)-solve(n,k-1);
-    //explaination here: https://github.com/Bacteria2210/Bracket/tree/main
+    cout<<(solve(n,k)-solve(n,k-1)+123456789)%123456789;
 }
